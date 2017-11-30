@@ -52,6 +52,9 @@ public class StartFragment extends Fragment {
         botonHelp.setOnClickListener((View) -> {
             try {
                 Fragment fragment = new AyudaFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("idVideo", "juaYWdhUuH0");
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.login_fragment_container, fragment);
                 transaction.addToBackStack(null);

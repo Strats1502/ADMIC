@@ -189,6 +189,9 @@ public class HomeFragment extends CustomFragment {
             try {
                 Fragment fragment = new AyudaFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putString("idVideo", "juaYWdhUuH0");
+                fragment.setArguments(bundle);
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
