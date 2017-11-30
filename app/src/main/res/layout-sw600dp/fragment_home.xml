@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/home"
+            android:src="@drawable/admic_registro"
             android:scaleType="centerCrop"/>
 
         <FrameLayout
@@ -177,7 +177,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/logo"
+            android:src="@drawable/admic_logo"
             app:layout_constraintHorizontal_bias="0.502" />
 
         <ImageButton
@@ -341,7 +341,7 @@
             android:id="@+id/img_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/promocion_guanajoven" />
+            android:src="@drawable/admic_promocion" />
 
         <ImageButton
             android:id="@+id/close"

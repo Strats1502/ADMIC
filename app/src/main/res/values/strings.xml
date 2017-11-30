@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Guanajoven</string>
+    <string name="app_name">ADMIC</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,13 +8,13 @@
 
     <!-- Strings related to usuario -->
     <string name="usuario">Inicia Sesión</string>
-    <string name="mensaje_bienvenida">En Guanajoven somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y políticas públicas, orientada a elevar la calidad de vida de los jóvenes guanajuatenses.</string>
+    <string name="mensaje_bienvenida">En Fondo Guanajuato ADMIC León A.C. somos una organización del sector privado cuyo objetivo principal es ofrecer un programa de desarrollo integral a la micro empresa de la localidad que tiene expectativas de crecimiento, para que de ésta forma se fortalezca logrando niveles propios de crecimiento, desarrollo, y funcione como fuente generadora de empleos.</string>
 
     <string name="home">Home</string>
-    <string name="bienvenida">HAZ DE GUANAJUATO TU PROYECTO DE VIDA</string>
+    <string name="bienvenida">EN ADMIC, APOYAMOS TU PROYECTO</string>
     <string name="comenzar">Comenzar</string>
     <string name="registrar">Registrar</string>
-    <string name="copyright">Copyright © \nGuanajuato 2017.</string>
+    <string name="copyright">Copyright © \nADMIC 2017.</string>
     <string name="inicio">Inicio</string>
     <string name="pass">Contraseña</string>
     <string name="ejercicio">Ejercicio</string>
@@ -38,7 +38,7 @@
     <string name="facebook_app_id">1547755481949405</string>
     <string name="fb_login_protocol_scheme">fb1547755481949405</string>
 
-    <string name="api_key">AIzaSyBqcgu3wsKmTDKHQjpMhhj-gie-eLR_ELI</string>
+    <string name="api_key">AIzaSyDKAbShlitmin_wsoxRxHLmdi7Ieynn3cY</string>
 
 
     <string name="datos_usuario">Datos de usuario</string>
@@ -334,7 +334,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="cambiar_imagen">Agrega una imagen</string>
     <string name="ingresa_datos">Ingresa los siguientes datos:</string>
     <string name="codigo_guanajoven">Código Guanajoven</string>
-    <string name="id_guanajoven">ID Guanajoven</string>
+    <string name="id_guanajoven">ID ADMIC</string>
     <string name="checkin_texto">Check-in</string>
     <string name="social">Redes sociales</string>
     <string name="promociones">Promociones</string>
@@ -361,6 +361,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="btn_quiero_mas_informacion">Quiero mas información</string>
     <string name="empty_regiones">No hay regiones registradas</string>
     <string name="regiones">Regiones</string>
+    <string name="sucursales">Sucursales</string>
     <string name="no_hay_convocatorias">No se encontraron documentos</string>
     <string name="no_documentos">No se encontraron documentos</string>
     <string name="registro_agua_title">Registro de Agua</string>
@@ -384,12 +385,12 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
 
     <!--Strings fragments conocenos-->
     <string name="conocenos_titulo">Conocenos</string>
-    <string name="conocenos_que_hacemos">¿Qué hacemos?</string>
+    <string name="conocenos_que_hacemos">¿Quienes somos?</string>
     <string name="conocenos_titulo_descripcion">Descripción</string>
     <string name="conocenos_titulo_mision">Misión</string>
     <string name="conocenos_titulo_vision">Visión</string>
     <string name="conocenos_titulo_valores">Valores</string>
-    <string name="conocenos_descripcion">En GUANAJOVEN fomentamos la creación y el desarrollo del proyecto de vida de los jóvenes guanajuatenses. Trabajamos para que los apoyos del Gobierno del Estado dirigidos al sector joven de la población lleguen de manera correcta a cada uno de ellos.</string>
+    <string name="conocenos_descripcion">Somos una organización del sector privado, nuestro principal objetivo es ofrecer un PROGRAMA INTEGRAL DE ASESORÍA, CAPACITACIÓN Y CRÉDITO A LA MICRO Y LA PEQUEÑA EMPRESA para que de esta forma se FORTALEZCA Y LOGRE CRECIMIENTO Y DESARROLLO.</string>
     <string name="conocenos_mision">Somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y politícas publicas, orientada a elevar la calidad de vida de los jóvenes Guanajuatenses.</string>
     <string name="conocenos_vision">En Guanajuato tenemos jóvenes con una mejor calidad de vida, integrados en una comunidad global, que participan de manera solidaria y comprometida en el desarrollo integral de su entorno.</string>
     <string name="conocenos_valores">Solidaridad\n
@@ -398,12 +399,29 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
                                      Responsabilidad\n
                                      Creatividad\n
                                      Humildad</string>
-    <string name="conocenos_titulo_logros_estadisticas">Logros y estadísticas</string>
-    <string name="logro1">• GUANAJUATO el estado de la República Mexicana más beneficiado con recurso económico por el IMJUVE (Federación).</string>
-    <string name="logro2">• En 2016 el Lic. Miguel Márquez Márquez fue reconocido como "El Gobernador de los Jóvenes" por la YABT.</string>
-    <string name="logro3">• Reconocimiento a nivel nacional por el IMJUVE como "Mejor Operatividad en Centros Poder Joven".</string>
-    <string name="logro4">• Logra GUANAJOVEN el GUINNESS WORLD RECORDS por "Concentración de mayor número de catrines y catrinas en 2016".</string>
+    <string name="conocenos_titulo_logros_estadisticas">Asesorias</string>
+    <string name="logro1">• 	Controles administrativos.</string>
+    <string name="logro2">•  Diseño de imagen.</string>
+    <string name="logro3">•  Control de costos.</string>
+    <string name="logro4">•  Sondeo de mercado, etc.</string>
+    <string name="asesorias">Ofrecemos soluciones prácticas y concretas para mejorar y/o fortalecer las principales áreas de oportunidad en tu empresa.
+Como pueden ser:
+</string>
 
+    
+    <string name="conocenos_titulo_capacitacion">Capacitación</string>
+    <string name="capacitacion">Capacitación básica con la oportunidad de conocer y aplicar de manera sencilla y práctica en temas relacionados con el negocio, la persona y la familia.</string>
+    <string name="capacitacion1">•	Trabajo en equipo.</string>
+    <string name="capacitacion2">•	Atención a clientes.</string>
+    <string name="capacitacion3">•	Desarrollo humano.</string>
+    <string name="capacitacion4">•	Liderazgo, etc.</string>
+    <string name="conocenos_titulo_credito">Crédito</string>
+    <string name="credito">Después de analizar juntos sus necesidades y definir sus proyectos de crecimiento y expansión, evaluamos la posibilidad de otorgarle un crédito el cual puede ser utilizado para:</string>
+    <string name="credito1">•	Surtir mercancía.</string>
+    <string name="credito2">•	Compra de herramienta.</string>
+    <string name="credito3">•	Compra de maquinaria.</string>
+    <string name="credito4">•	Compra de equipo.</string>
+    <string name="credito5">•	Ampliar o mejorar las instalaciones.</string>
     <string name="conocenos_enlaces">Enlaces</string>
     <string name="conocenos_lineas_de_accion"><u>Líneas de acción</u></string>
     <string name="conocenos_diagnostico_juvenil"><u>Diagnóstico juvenil</u></string>
@@ -456,4 +474,10 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="evento_ha_caducado">Este evento ha caducado</string>
     <string name="aplicar_promocion_text">Aplicar promoción</string>
     <string name="ya_has_sido_registrado">Ya has sido registrado en este evento</string>
+
+
+    <!--Fragment facebook-->
+    <string name="fragment_facebook_pipe">|</string>
+    <string name="facebook_app_secret">d0a9689fb2057dacf88969ecd22e4e53</string>
+
 </resources>

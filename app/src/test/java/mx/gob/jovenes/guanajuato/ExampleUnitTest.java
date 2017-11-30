@@ -1,4 +1,4 @@
-package mx.gob.jovenes.guanajuato;
+package mx.gob.admic;
 
 import org.junit.Test;
 

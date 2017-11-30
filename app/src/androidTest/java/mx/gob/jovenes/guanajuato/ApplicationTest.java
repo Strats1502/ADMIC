@@ -1,4 +1,4 @@
-package mx.gob.jovenes.guanajuato;
+package mx.gob.admic;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

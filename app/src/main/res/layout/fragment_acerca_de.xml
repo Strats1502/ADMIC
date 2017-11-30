@@ -15,9 +15,10 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:src="@drawable/logo" />
+            android:src="@drawable/admic_logo" />
 
         <TextView
+            android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -40,6 +41,12 @@
             android:textColor="@color/colorAccent"
             android:textSize="20dp"
             android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/asesorias"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -70,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@string/conocenos_enlaces"
+            android:text="@string/conocenos_titulo_capacitacion"
             android:textColor="@color/colorAccent"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -79,33 +86,80 @@
             android:id="@+id/enlace_lineas_de_accion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/conocenos_lineas_de_accion"
-            android:textColor="@color/colorPrimary" />
+            android:layout_margin="10dp"
+            android:text="@string/capacitacion"/>
 
         <TextView
             android:id="@+id/enlace_encuesta_de_juventud"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/conocenos_encuesta_juventud"
-            android:textColor="@color/colorPrimary" />
+            android:layout_margin="10dp"
+            android:text="@string/capacitacion1" />
 
         <TextView
             android:id="@+id/enlace_diagnostico_juvenil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/conocenos_diagnostico_juvenil"
-            android:textColor="@color/colorPrimary" />
+            android:layout_margin="10dp"
+            android:text="@string/capacitacion2"/>
 
         <TextView
             android:id="@+id/enlace_directorio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/capacitacion3"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/capacitacion4"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@string/conocenos_directorio"
-            android:textColor="@color/colorPrimary"/>
+            android:text="@string/conocenos_titulo_credito"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/credito"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/credito1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/credito2"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/credito3"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/credito4"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/credito5"/>
 
     </LinearLayout>
 

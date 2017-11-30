@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/registro_usuario" />
+            android:src="@drawable/admic_registro" />
 
         <FrameLayout
             android:layout_width="match_parent"

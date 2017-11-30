@@ -41,9 +41,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@drawable/background_codigo_guanajoven"
                 android:orientation="horizontal">
-
+<!--
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -57,21 +56,21 @@
                         android:src="@drawable/letras_codigo_guanajoven" />
 
 
-                </FrameLayout>
+                </FrameLayout>-->
 
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:padding="5dp">
 
                     <ImageView
                         android:id="@+id/logo_guanajoven"
                         android:layout_width="200dp"
                         android:layout_height="60dp"
-                        android:layout_gravity="end"
-                        android:src="@drawable/logo" />
+                        android:layout_gravity="center"
+                        android:src="@drawable/admic_logo" />
 
                 </FrameLayout>
 
@@ -116,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/codigo_guanajoven"
+                    android:text="@string/id_guanajoven"
                     android:textSize="20sp" />
 
                 <TextView
@@ -125,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="50dp"
                     android:gravity="center"
-                    android:text="@string/codigo_guanajoven"
+                    android:text="@string/id_guanajoven"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />

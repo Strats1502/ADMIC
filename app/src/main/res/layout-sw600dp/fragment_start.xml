@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/inicio_registro"
+            android:src="@drawable/admic_registrar"
             android:scaleType="centerCrop"/>
         <FrameLayout
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
 
         <ImageView
             android:layout_width="271dp"
-            app:srcCompat="@drawable/logo"
+            app:srcCompat="@drawable/admic_logo"
             android:id="@+id/imageView"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="64dp"

@@ -62,10 +62,6 @@
                     android:id="@+id/nav_chat_ayuda"
                     android:icon="@drawable/chat_grey"
                     android:title="@string/chat" />
-
-
-
-
             </group>
         </menu>
     </item>
@@ -73,14 +69,12 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item android:id="@+id/nav_regiones"
-                    android:icon="@drawable/ic_regiones"
-                    android:title="@string/regiones"/>
+                    android:icon="@drawable/ic_place_black_24dp"
+                    android:title="@string/sucursales"/>
                 <item
                     android:id="@+id/nav_acerca_de"
                     android:icon="@drawable/ayuda"
                     android:title="@string/acerca_de" />
-
-
             </group>
         </menu>
     </item>
