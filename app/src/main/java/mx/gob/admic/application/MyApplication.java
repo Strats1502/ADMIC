@@ -46,13 +46,13 @@ public class MyApplication extends MultiDexApplication {
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
 
     //dirección publica
-    //public static final String BASE_URL = "http://200.23.39.11/admicweb/public/api/";
+    public static final String BASE_URL = "http://200.23.39.11/admicweb/public/api/";
 
     //uriel publica
     //public static final String BASE_URL = "http://10.0.7.131/GuanajovenWeb/public/api/";
 
     //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
-    public static final String BASE_URL = "http://10.0.7.40/admicweb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.40/admicweb/public/api/";
     public static final String FACEBOOK_BASE_URL = "https://graph.facebook.com/v2.11/";
     public static final String YOUTUBE_BASE_URL = "https://www.googleapis.com/youtube/v3/";
     //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
@@ -121,7 +121,7 @@ public class MyApplication extends MultiDexApplication {
         //Instancia de retrofit, utilizada en la app.
          retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
          retrofitFacebook = new Retrofit.Builder().baseUrl(FACEBOOK_BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
-         retrofitYoutube = new Retrofit.Builder().baseUrl(YOUTUBE_BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
+         retrofitYoutube = new Retrofit.Builder().baseUrl(YOUTUBE_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
         //Iniciar Firebase
         Firebase.setAndroidContext(this);

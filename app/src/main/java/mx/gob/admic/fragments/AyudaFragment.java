@@ -21,6 +21,7 @@ import mx.gob.admic.R;
 public class AyudaFragment extends Fragment {
     private YouTubePlayerFragment videoView;
     private YouTubePlayer.OnInitializedListener listener;
+    private String idVideo;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -31,9 +32,8 @@ public class AyudaFragment extends Fragment {
         listener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo("8qdgB_JUWL4");
+                youTubePlayer.loadVideo(getArguments().getString("idVideo"));
                 youTubePlayer.setShowFullscreenButton(false);
-                //youTubePlayer.setOnFullscreenListener(b1 -> getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
             }
 
             @Override
@@ -54,5 +54,9 @@ public class AyudaFragment extends Fragment {
         this.onDestroy();
         if (videoView != null)
             getActivity().getFragmentManager().beginTransaction().remove(videoView).commit();
+    }
+
+    public void setIdVideo(String idVideo) {
+        this.idVideo = idVideo;
     }
 }

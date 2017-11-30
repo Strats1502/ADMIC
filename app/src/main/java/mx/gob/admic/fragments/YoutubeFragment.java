@@ -36,8 +36,6 @@ public class YoutubeFragment extends Fragment {
     private RecyclerView recyclerView;
     private RVYoutubeAdapter adapter;
 
-    private String playlistId;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +56,26 @@ public class YoutubeFragment extends Fragment {
         callChannel.enqueue(new Callback<ResponseYoutube<List<YoutubeChannel>>>() {
             @Override
             public void onResponse(Call<ResponseYoutube<List<YoutubeChannel>>> call, retrofit2.Response<ResponseYoutube<List<YoutubeChannel>>> response) {
-                playlistId = response.body().getItems().get(0).getContentDetails().getRelatedPlaylists().getUploads();
+                String playlistId = response.body().getItems().get(0).getContentDetails().getRelatedPlaylists().getUploads();
+
+                Call<ResponseYoutube<List<YoutubeVideo>>> callVideos = youtubeAPI.getVideos("snippet", 10, playlistId, getString(R.string.api_key));
+
+                callVideos.enqueue(new Callback<ResponseYoutube<List<YoutubeVideo>>>() {
+                    @Override
+                    public void onResponse(Call<ResponseYoutube<List<YoutubeVideo>>> call, retrofit2.Response<ResponseYoutube<List<YoutubeVideo>>> response) {
+                        adapter = new RVYoutubeAdapter(getContext(), response.body().getItems());
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseYoutube<List<YoutubeVideo>>> call, Throwable t) {
+                        System.err.println("----------------------------------------------------------2222222");
+                        System.err.println(t.getMessage());
+                        System.err.println("------------------------------------------------------------------");
+                    }
+                });
+
             }
 
             @Override
@@ -66,28 +83,6 @@ public class YoutubeFragment extends Fragment {
 
             }
         });
-
-        System.err.println("------------------------------------------------------");
-        System.err.println(playlistId);
-        System.err.println("-------------------------------------------------");
-/*
-        Call<ResponseYoutube<List<YoutubeVideo>>> callVideos = youtubeAPI.getVideos("snippet", 10, playlistId, getString(R.string.api_key));
-
-        callVideos.enqueue(new Callback<ResponseYoutube<List<YoutubeVideo>>>() {
-            @Override
-            public void onResponse(Call<ResponseYoutube<List<YoutubeVideo>>> call, retrofit2.Response<ResponseYoutube<List<YoutubeVideo>>> response) {
-                adapter = new RVYoutubeAdapter(getContext(), response.body().getItems());
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            }
-
-            @Override
-            public void onFailure(Call<ResponseYoutube<List<YoutubeVideo>>> call, Throwable t) {
-                System.err.println("----------------------------------------------------------2222222");
-                System.err.println(t.getMessage());
-                System.err.println("------------------------------------------------------------------");
-            }
-        });*/
 
         return v;
     }
