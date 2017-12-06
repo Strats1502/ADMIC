@@ -17,7 +17,7 @@ public interface YoutubeAPI {
     @GET("channels")
     Call<ResponseYoutube<List<YoutubeChannel>>> getChannel(
             @Query("part") String part,
-            @Query("forUsername") String userName,
+            @Query("id") String id,
             @Query("key") String key
     );
 

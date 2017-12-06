@@ -21,7 +21,6 @@ import mx.gob.admic.R;
 public class AyudaFragment extends Fragment {
     private YouTubePlayerFragment videoView;
     private YouTubePlayer.OnInitializedListener listener;
-    private String idVideo;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -56,7 +55,4 @@ public class AyudaFragment extends Fragment {
             getActivity().getFragmentManager().beginTransaction().remove(videoView).commit();
     }
 
-    public void setIdVideo(String idVideo) {
-        this.idVideo = idVideo;
-    }
 }

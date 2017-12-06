@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -40,6 +41,8 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -115,6 +118,8 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
 
     private TextView textViewConsultarCurp;
 
+    private TextInputLayout textInputLayout;
+
     private static final String ERROR_EMAIL_OBLIGATORIO = "El campo email es obligatorio";
     private static final String ERROR_PASSWORD_OBLIGATORIO = "El campo password es obligatorio";
     private static final String ERROR_CURP_OBLIGATORIO = "El campo curp es obligatorio";
@@ -163,6 +168,7 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
         btnBack = (ImageButton) v.findViewById(R.id.btn_back);
 
         textViewConsultarCurp = (TextView) v.findViewById(R.id.textview_consultar_curp);
+        textInputLayout = (TextInputLayout) v.findViewById(R.id.textinputlayout_fecha_nacimiento);
 
         textViewConsultarCurp.setOnClickListener((View) -> {
             enlace("https://consultas.curp.gob.mx/CurpSP/inicio2_2.jsp");
@@ -200,7 +206,7 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                 InputType.TYPE_TEXT_VARIATION_PASSWORD);
         etPassword2.setTypeface(Typeface.DEFAULT);
 
-        etCurp.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        etCurp.setFilters(new InputFilter[] {new InputFilter.AllCaps(), new InputFilter.LengthFilter(18)});
 /*
         etCurp.addTextChangedListener(new TextWatcher() {
             @Override
@@ -299,7 +305,7 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                 String monthString = String.valueOf(month);
                 String dayString = String.valueOf(dayOfMonth);
 
-
+                etFechaNacimiento.setText(dayString + "/" + monthString + "/" + yearString);
             }
         };
 
@@ -419,6 +425,8 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                         usuario == null ? null : usuario.getIdGoogle(),
                         usuario == null ? null : usuario.getIdFacebook()
                 );
+
+                System.err.println(new Gson().toJson(r));
 
                 Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(r);
 

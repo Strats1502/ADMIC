@@ -75,7 +75,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     .setAutoCancel(true)
                     .setContentTitle(title)
 
-                    .setSmallIcon(R.drawable.logo)
+                    .setSmallIcon(R.drawable.admic_logo)
                     .setContentText(message)
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setVibrate(new long[]{200, 1000, 200, 1000, 200})

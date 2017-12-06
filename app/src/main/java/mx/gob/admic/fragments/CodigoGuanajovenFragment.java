@@ -98,7 +98,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
             Curp,
             estado,
             rutaImagen,
-            municipio,
             fechaNacimiento;
 
     private int idGenero;
@@ -152,6 +151,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
 
 
         System.err.println(Sesion.getUsuario().getCodigoGuanajoven().getToken());
+        System.err.println();
 
 
         /**
@@ -163,6 +163,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
             public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
                 if (response.body().success) {
                     String tokenGuanajoven = response.body().data;
+                    System.err.println(tokenGuanajoven);
                     try {
                         generarQR(tokenGuanajoven, imagenQr);
                     } catch (WriterException e) {
@@ -198,7 +199,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         fechaNacimiento = getFechaCast(u.getDatosUsuario().getFechaNacimiento());
         codigoGuanajoven = String.valueOf(u.getCodigoGuanajoven().getIdCodigoGuanajoven());
         Curp = u.getDatosUsuario().getCurp();
-        municipio = u.getDatosUsuario().getMunicipio().getNombre();
         estado = u.getDatosUsuario().getEstadoNacimiento().getNombre();
         rutaImagen = u.getDatosUsuario().getRutaImagen();
 
@@ -222,7 +222,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputCodigoGuanajoven.setText(codigoGuanajoven);
         inputFechaNacimiento.setText(fechaNacimiento);
         inputCurp.setText(Curp);
-        inputMunicipio.setText(municipio);
         inputEstado.setText(estado);
         Picasso.with(getActivity()).load(rutaImagen).into(imagenUsuario);
         Picasso.with(getActivity()).load(rutaImagen).into(imgBackground);

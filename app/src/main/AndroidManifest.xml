@@ -116,6 +116,10 @@
             android:name=".activities.HelpActivity"
             android:label="@string/title_activity_help"
             android:theme="@style/ActivityStyle"/>
+
+        <activity
+            android:name=".activities.ReproductorActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

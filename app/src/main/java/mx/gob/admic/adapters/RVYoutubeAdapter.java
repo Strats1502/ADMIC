@@ -2,6 +2,7 @@ package mx.gob.admic.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,17 +18,23 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.admic.R;
+import mx.gob.admic.activities.ReproductorActivity;
 import mx.gob.admic.fragments.AyudaFragment;
 import mx.gob.admic.model.YoutubeVideo;
 
 public class RVYoutubeAdapter extends RecyclerView.Adapter<RVYoutubeAdapter.YoutubeAdapterViewHolder> {
     private List<YoutubeVideo> videos;
     private Context context;
+    private String channelTitle;
+    private String channelImageURL;
 
-    public RVYoutubeAdapter(Context context, List<YoutubeVideo> videos) {
+    public RVYoutubeAdapter(Context context, List<YoutubeVideo> videos, String channelTitle, String channelImageURL) {
         this.context = context;
         this.videos = videos;
+        this.channelTitle = channelTitle;
+        this.channelImageURL = channelImageURL;
     }
 
     @Override
@@ -39,8 +46,10 @@ public class RVYoutubeAdapter extends RecyclerView.Adapter<RVYoutubeAdapter.Yout
 
     @Override
     public void onBindViewHolder(YoutubeAdapterViewHolder holder, int position) {
-        Picasso.with(context).load(videos.get(position).getSnippet().getThumbnails().getMedium().getUrl()).into(holder.imageViewThumbnail);
+        Picasso.with(context).load(videos.get(position).getSnippet().getThumbnails().getHigh().getUrl()).into(holder.imageViewThumbnail);
+        Picasso.with(context).load(channelImageURL).into(holder.circleImageViewImagenUsuario);
         holder.textViewTituloVideo.setText(videos.get(position).getSnippet().getTitle());
+        holder.textViewTituloCanal.setText(channelTitle);
         holder.textViewDescripcionVideo.setText(videos.get(position).getSnippet().getDescription());
         holder.idVideo = videos.get(position).getSnippet().getResourceId().getVideoId();
     }
@@ -52,7 +61,9 @@ public class RVYoutubeAdapter extends RecyclerView.Adapter<RVYoutubeAdapter.Yout
 
     class YoutubeAdapterViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewThumbnail;
+        CircleImageView circleImageViewImagenUsuario;
         TextView textViewTituloVideo;
+        TextView textViewTituloCanal;
         TextView textViewDescripcionVideo;
         String idVideo;
 
@@ -60,7 +71,9 @@ public class RVYoutubeAdapter extends RecyclerView.Adapter<RVYoutubeAdapter.Yout
             super(itemView);
 
             imageViewThumbnail = (ImageView) itemView.findViewById(R.id.imageview_youtube_thumbnail);
+            circleImageViewImagenUsuario = (CircleImageView) itemView.findViewById(R.id.circleimageview_imagen_usuario_youtube);
             textViewTituloVideo = (TextView) itemView.findViewById(R.id.textview_titulo_video);
+            textViewTituloCanal = (TextView) itemView.findViewById(R.id.textview_titulo_canal);
             textViewDescripcionVideo = (TextView) itemView.findViewById(R.id.textview_descripción_video);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -68,16 +81,11 @@ public class RVYoutubeAdapter extends RecyclerView.Adapter<RVYoutubeAdapter.Yout
                 @Override
                 public void onClick(View view) {
                     try {
-                        Fragment fragment = new AyudaFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("idVideo", idVideo);
-                        fragment.setArguments(bundle);
-                        FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.segunda_fragment_container, fragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        Intent intent = new Intent(context, ReproductorActivity.class);
+                        intent.putExtra("idVideo", idVideo);
+                        context.startActivity(intent);
                     } catch (Exception e) {
-                        e.printStackTrace();
+
                     }
                 }
             });

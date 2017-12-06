@@ -169,7 +169,7 @@ public class HomeFragment extends CustomFragment {
         textViewBolsaTrabajo = (TextView) v.findViewById(R.id.textview_bolsa_de_trabajo);
 
         textViewBolsaTrabajo.setOnClickListener((View) -> {
-            enlace("http://jovenes.guanajuato.gob.mx/index.php/empresas-incluyentes/");
+            enlace("http://www.admic.org.mx/");
         });
 
         //Listeners de publicidad

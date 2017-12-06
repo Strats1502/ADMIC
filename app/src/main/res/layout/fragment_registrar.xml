@@ -130,6 +130,7 @@
 
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/textinputlayout_fecha_nacimiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -138,12 +139,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:maxLength="18"
+                    android:maxLength="1"
                     android:textColorHint="@color/gray"
                     android:typeface="normal"
                     android:inputType="textCapCharacters"
                     android:textSize="16dp"
                     android:hint="@string/curp" />
+
             </android.support.design.widget.TextInputLayout>
 
             <TextView

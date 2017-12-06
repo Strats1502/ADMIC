@@ -17,7 +17,8 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/admic_logo"/>
+            android:src="@drawable/admic_logo"
+            android:layout_margin="10dp"/>
 
         <TextView
             android:id="@+id/textview_mensaje_facebook"

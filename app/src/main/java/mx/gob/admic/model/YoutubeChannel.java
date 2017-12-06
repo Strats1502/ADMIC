@@ -8,6 +8,7 @@ public class YoutubeChannel {
     private String kind;
     private String etag;
     private String id;
+    private YoutubeChannelSnippet snippet;
     private YoutubeChannelContentDetails contentDetails;
 
     public String getKind() {
@@ -32,6 +33,14 @@ public class YoutubeChannel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public YoutubeChannelSnippet getSnippet() {
+        return snippet;
+    }
+
+    public void setSnippet(YoutubeChannelSnippet snippet) {
+        this.snippet = snippet;
     }
 
     public YoutubeChannelContentDetails getContentDetails() {

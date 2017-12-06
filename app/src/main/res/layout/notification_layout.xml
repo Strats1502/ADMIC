@@ -19,7 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/logo" />
+            android:src="@drawable/admic_logo" />
 
         <TextView
             android:id="@+id/notiftitle"

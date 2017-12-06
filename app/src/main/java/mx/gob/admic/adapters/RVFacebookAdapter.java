@@ -39,8 +39,10 @@ public class RVFacebookAdapter extends RecyclerView.Adapter<RVFacebookAdapter.Fa
     public void onBindViewHolder(FacebookAdapterViewHolder holder, int position) {
         if (posts.get(position).getMessage() != null) {
             holder.textViewMensaje.setText(posts.get(position).getMessage());
-        } else {
+        } else if (posts.get(position).getStory() != null){
             holder.textViewMensaje.setText(posts.get(position).getStory());
+        } else {
+            holder.textViewMensaje.setText("Se ha creado una nueva publicación");
         }
 
         holder.url = "https://www.facebook.com/" + posts.get(position).getId();

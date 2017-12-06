@@ -51,19 +51,21 @@ public class YoutubeFragment extends Fragment {
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_youtube_videos);
 
-        Call<ResponseYoutube<List<YoutubeChannel>>> callChannel = youtubeAPI.getChannel("contentDetails", "macdemarco", getString(R.string.api_key));
+        Call<ResponseYoutube<List<YoutubeChannel>>> callChannel = youtubeAPI.getChannel("contentDetails, snippet", "UCFv98pYn2iEPbRMuizGUpTg", getString(R.string.api_key));
 
         callChannel.enqueue(new Callback<ResponseYoutube<List<YoutubeChannel>>>() {
             @Override
             public void onResponse(Call<ResponseYoutube<List<YoutubeChannel>>> call, retrofit2.Response<ResponseYoutube<List<YoutubeChannel>>> response) {
                 String playlistId = response.body().getItems().get(0).getContentDetails().getRelatedPlaylists().getUploads();
+                String channelTitle = response.body().getItems().get(0).getSnippet().getTitle();
+                String channelImageURL = response.body().getItems().get(0).getSnippet().getThumbnails().getHigh().getUrl();
 
                 Call<ResponseYoutube<List<YoutubeVideo>>> callVideos = youtubeAPI.getVideos("snippet", 10, playlistId, getString(R.string.api_key));
 
                 callVideos.enqueue(new Callback<ResponseYoutube<List<YoutubeVideo>>>() {
                     @Override
                     public void onResponse(Call<ResponseYoutube<List<YoutubeVideo>>> call, retrofit2.Response<ResponseYoutube<List<YoutubeVideo>>> response) {
-                        adapter = new RVYoutubeAdapter(getContext(), response.body().getItems());
+                        adapter = new RVYoutubeAdapter(getContext(), response.body().getItems(), channelTitle, channelImageURL);
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                     }

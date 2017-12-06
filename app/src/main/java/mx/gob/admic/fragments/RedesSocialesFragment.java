@@ -43,9 +43,8 @@ public class RedesSocialesFragment extends CustomFragment {
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
 
-        tabs.getTabAt(0).setIcon(R.drawable.ic_twitter);
-        tabs.getTabAt(1).setIcon(R.drawable.ic_facebook);
-        tabs.getTabAt(2).setIcon(R.drawable.ic_youtube);
+        tabs.getTabAt(0).setIcon(R.drawable.ic_facebook);
+        tabs.getTabAt(1).setIcon(R.drawable.ic_youtube);
 
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
