@@ -59,6 +59,7 @@ import retrofit2.Retrofit;
  */
 public class SegundaActivity extends AppCompatActivity {
     public static SegundaActivity segundaActivity;
+    public static boolean arePaused;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,6 +164,19 @@ public class SegundaActivity extends AppCompatActivity {
     public void onBackPressed() {
         this.getSupportActionBar().setTitle(R.string.app_name);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.err.println("wergggggggggggggggggggggggggggggggggggggggggggggg");
+        arePaused = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        arePaused = false;
     }
 
     /*

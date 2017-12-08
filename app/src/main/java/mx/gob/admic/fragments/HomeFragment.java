@@ -2,6 +2,8 @@ package mx.gob.admic.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -51,12 +53,14 @@ import mx.gob.admic.activities.SegundaActivity;
 import mx.gob.admic.api.NotificacionAPI;
 import mx.gob.admic.api.PublicidadAPI;
 import mx.gob.admic.api.Response;
+import mx.gob.admic.api.UsuarioAPI;
 import mx.gob.admic.application.MyApplication;
 import mx.gob.admic.connection.ClienteHttp;
 import mx.gob.admic.model.Evento;
 import mx.gob.admic.model.Publicidad;
 import mx.gob.admic.model.Perfil;
 import mx.gob.admic.model.PerfilPOJO;
+import mx.gob.admic.model.Usuario;
 import mx.gob.admic.model.models_tmp.Imagen;
 import mx.gob.admic.notifications.FirebaseInstanceIDService;
 import mx.gob.admic.sesion.Sesion;
@@ -108,6 +112,7 @@ public class HomeFragment extends CustomFragment {
     private PublicidadAPI publicidadAPI;
     private Realm realm;
     private NotificacionAPI notificacionAPI;
+    private UsuarioAPI usuarioAPI;
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
@@ -117,6 +122,7 @@ public class HomeFragment extends CustomFragment {
     Fragment fragment = null;
 
     private TextView textViewBolsaTrabajo;
+    public static AlertDialog.Builder mensaje;
 
 
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
@@ -128,6 +134,7 @@ public class HomeFragment extends CustomFragment {
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         publicidadAPI = retrofit.create(PublicidadAPI.class);
         notificacionAPI = retrofit.create(NotificacionAPI.class);
+        usuarioAPI = retrofit.create(UsuarioAPI.class);
 
         //Instancia de Realm
         realm = MyApplication.getRealmInstance();
@@ -167,9 +174,31 @@ public class HomeFragment extends CustomFragment {
         textViewNotificaciones = (TextView) v.findViewById(R.id.textview_notificaciones);
 
         textViewBolsaTrabajo = (TextView) v.findViewById(R.id.textview_bolsa_de_trabajo);
+        mensaje = new AlertDialog.Builder(getContext());
+
 
         textViewBolsaTrabajo.setOnClickListener((View) -> {
-            enlace("http://www.admic.org.mx/");
+            Call<Response<Boolean>> call = usuarioAPI.solicitarCredito(Sesion.getUsuario().getApiToken());
+            ProgressDialog cargando = ProgressDialog.show(getContext(), "Cargando", "Espere, estamos enviando tu correo");
+
+            call.enqueue(new Callback<Response<Boolean>>() {
+                @Override
+                public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                    cargando.dismiss();
+                    mensaje.setTitle("Correo enviado");
+                    mensaje.setMessage("Tu correo ha sido enviado");
+                    mensaje.show();
+
+                    MyApplication.contadorCorreosCredito.start();
+                }
+
+                @Override
+                public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                    mensaje.setTitle("Error al enviar correo");
+                    mensaje.setMessage("Ocurrió un error al enviar tu correo");
+                    mensaje.show();
+                }
+            });
         });
 
         //Listeners de publicidad

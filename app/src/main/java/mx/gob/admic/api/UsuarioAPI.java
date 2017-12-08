@@ -103,4 +103,9 @@ public interface UsuarioAPI {
     Call<Response<String>> actualizarTokenGuanajoven(
             @Query("api_token") String apiToken
     );
+
+    @POST("credito/enviar")
+    Call<Response<Boolean>> solicitarCredito (
+            @Query("api_token") String apiToken
+    );
 }

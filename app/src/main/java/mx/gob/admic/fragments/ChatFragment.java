@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import mx.gob.admic.R;
+import mx.gob.admic.activities.SegundaActivity;
 import mx.gob.admic.adapters.RVMessagesAdapter;
 import mx.gob.admic.api.ChatAPI;
 import mx.gob.admic.api.Response;
@@ -94,9 +95,6 @@ public class ChatFragment extends CustomFragment {
                     mensajes.add(0, new Mensaje(editTextMessage.getText().toString(), 1));
 
                     adapter.notifyData(mensajes);
-
-
-                    System.err.println(mensajes);
 
                     Call<Response<Boolean>> call = chatAPI.enviarMensaje(Sesion.getUsuario().getApiToken(), editTextMessage.getText().toString());
 
@@ -208,7 +206,7 @@ public class ChatFragment extends CustomFragment {
 
     public static boolean estaEnChat() {
          if (chat != null) {
-            if (chat.isVisible()) {
+            if (chat.isVisible() && !SegundaActivity.arePaused) {
                 return true;
             }
         }

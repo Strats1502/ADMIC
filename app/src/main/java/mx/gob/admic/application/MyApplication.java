@@ -63,6 +63,7 @@ public class MyApplication extends MultiDexApplication {
     private static int minutes = 5;
     private static long TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;
     private static long TIEMPO_RESTANTE_CORREOS_EVENTOS = minutes * 60000;
+    private static long TIEMPO_RESTANTE_CORREOS_CREDITO = minutes * 60000;
 
     public static CountDownTimer contadorCorreosConvocatorias = new CountDownTimer(TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS, 100) {
         @Override
@@ -105,6 +106,23 @@ public class MyApplication extends MultiDexApplication {
         }
     };
 
+    public static String TIEMPO_CORREOS_CREDITO;
+
+    public static CountDownTimer contadorCorreosCredito = new CountDownTimer(TIEMPO_RESTANTE_CORREOS_CREDITO, 100) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            TIEMPO_RESTANTE_CORREOS_CREDITO = millisUntilFinished;
+            Date date = new Date(TIEMPO_RESTANTE_CORREOS_CREDITO);
+            SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
+            String formatted = formatter.format(date);
+            TIEMPO_CORREOS_CREDITO = formatted;
+        }
+
+        @Override
+        public void onFinish() {
+            TIEMPO_RESTANTE_CORREOS_CREDITO = minutes * 60000;
+        }
+    };
     /**
      * Punto de partida que ejecuta la app al iniciar.
      */

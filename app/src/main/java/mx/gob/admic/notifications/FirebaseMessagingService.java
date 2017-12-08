@@ -104,6 +104,43 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
             ringtone.play();
+/*
+            RemoteViews view = new RemoteViews(this.getApplicationContext().getPackageName(), R.layout.notification_layout);
+            RemoteViews bigView = new RemoteViews(this.getApplicationContext().getPackageName(), R.layout.notification_big_layout);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            Notification notificationf = builder
+                    .setAutoCancel(true)
+                    .setContentTitle(title)
+
+                    .setSmallIcon(R.drawable.admic_logo)
+                    .setContentText(message)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setVibrate(new long[]{200, 1000, 200, 1000, 200})
+                    .setContentIntent(pendingIntent)
+                    .build();
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String time = sdf.format(new Date().getTime());
+
+            view.setTextViewText(R.id.notiftitle, title);
+            view.setTextViewText(R.id.notiftime, time);
+            view.setTextViewText(R.id.notiftext, message);
+            bigView.setTextViewText(R.id.notiftitle, title);
+            bigView.setTextViewText(R.id.notiftime, time);
+            bigView.setTextViewText(R.id.notiftext, message);
+
+            notificationf.contentView = view;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                notificationf.bigContentView = bigView;
+            }
+
+            notificationf.flags |= Notification.FLAG_AUTO_CANCEL;
+            manager.notify(0, notificationf);*/
         }
 
         if(enlace == null || !enlace.equals("chat")) {
@@ -119,10 +156,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
 
 
-
-    }
-
-    public void guardarNotificación() {
 
     }
 
