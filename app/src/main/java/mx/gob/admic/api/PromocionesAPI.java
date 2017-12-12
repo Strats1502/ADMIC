@@ -22,7 +22,7 @@ public interface PromocionesAPI {
 
 
     @POST("promociones/registrar")
-    Call<Response<Boolean>> registrar (
+    Call<Response<Integer>> registrar (
             @Query("token") String token,
             @Query("id_promocion") int idPromocion
     );

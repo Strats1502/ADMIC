@@ -121,7 +121,7 @@ public class HomeFragment extends CustomFragment {
     FragmentTransaction fragmentTransaction;
     Fragment fragment = null;
 
-    private TextView textViewBolsaTrabajo;
+    public static TextView textViewBolsaTrabajo;
     public static AlertDialog.Builder mensaje;
 
 
@@ -178,27 +178,33 @@ public class HomeFragment extends CustomFragment {
 
 
         textViewBolsaTrabajo.setOnClickListener((View) -> {
-            Call<Response<Boolean>> call = usuarioAPI.solicitarCredito(Sesion.getUsuario().getApiToken());
-            ProgressDialog cargando = ProgressDialog.show(getContext(), "Cargando", "Espere, estamos enviando tu correo");
+            if (MyApplication.enviarCorreos) {
+                Call<Response<Boolean>> call = usuarioAPI.solicitarCredito(Sesion.getUsuario().getApiToken());
+                ProgressDialog cargando = ProgressDialog.show(getContext(), "Cargando", "Espere, estamos enviando tu correo");
 
-            call.enqueue(new Callback<Response<Boolean>>() {
-                @Override
-                public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    cargando.dismiss();
-                    mensaje.setTitle("Correo enviado");
-                    mensaje.setMessage("Tu correo ha sido enviado");
-                    mensaje.show();
+                call.enqueue(new Callback<Response<Boolean>>() {
+                    @Override
+                    public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                        cargando.dismiss();
+                        mensaje.setTitle("Correo enviado");
+                        mensaje.setMessage("Tu correo ha sido enviado");
+                        mensaje.show();
 
-                    MyApplication.contadorCorreosCredito.start();
-                }
+                        MyApplication.contadorCorreosCredito.start();
+                    }
 
-                @Override
-                public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    mensaje.setTitle("Error al enviar correo");
-                    mensaje.setMessage("Ocurrió un error al enviar tu correo");
-                    mensaje.show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                        mensaje.setTitle("Error al enviar correo");
+                        mensaje.setMessage("Ocurrió un error al enviar tu correo");
+                        mensaje.show();
+                    }
+                });
+            } else {
+                mensaje.setTitle("Tiempo de espera");
+                mensaje.setMessage("Tienes que esperar " + MyApplication.TIEMPO_CORREOS_CREDITO + " minutos para enviar otro correo");
+                mensaje.show();
+            }
         });
 
         //Listeners de publicidad

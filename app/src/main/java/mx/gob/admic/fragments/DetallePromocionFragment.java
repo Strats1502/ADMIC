@@ -73,6 +73,10 @@ public class DetallePromocionFragment extends Fragment {
     private static final String ERROR_PROMOCION = "No existe promocion";
     private static final String ERROR_EMPRESA = "No existe la empresa";
 
+    private static final String PROMOCION_REGISTRADA = "Promoción registrada";
+    private static final String ERROR_NO_SE_PERMITE_REGISTRAR_DOS_VECES = "No puede aplicar dos veces esta promoción";
+    private static final String ERROR_YA_NO_QUEDAN_REGISTROS = "Ya no hay promociones disponibles";
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,27 +189,31 @@ public class DetallePromocionFragment extends Fragment {
         alerta.setMessage("Al aplicar esta promoción quedará registrado en la base de datos que has sido beneficiado por la empresa, ¿Estas seguro de Aplicar esta promoción?");
 
         alerta.setPositiveButton("Aceptar", (dialog, which) -> {
-            Call<Response<Boolean>> call = promocionAPI.registrar(Sesion.getUsuario().getCodigoGuanajoven().getToken(), promocion.getIdPromocion());
+            Call<Response<Integer>> call = promocionAPI.registrar(Sesion.getUsuario().getCodigoGuanajoven().getToken(), promocion.getIdPromocion());
 
-            call.enqueue(new Callback<Response<Boolean>>() {
+            call.enqueue(new Callback<Response<Integer>>() {
                 @Override
-                public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                public void onResponse(Call<Response<Integer>> call, retrofit2.Response<Response<Integer>> response) {
                     if (response.body().errors.length == 0) {
                         linearLayoutCodigoPromocion.setVisibility(android.view.View.VISIBLE);
                         imageViewCodigoQR.setVisibility(android.view.View.VISIBLE);
 
-                        Snackbar.make(getView(), "Promoción registrada", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), PROMOCION_REGISTRADA, Snackbar.LENGTH_LONG).show();
                     } else if (response.body().errors[0].equals(ERROR_ID_GUANAJOVEN)) {
                         Snackbar.make(getView(), ERROR_ID_GUANAJOVEN, Snackbar.LENGTH_LONG).show();
                     } else if (response.body().errors[0].equals(ERROR_PROMOCION)) {
                         Snackbar.make(getView(), ERROR_PROMOCION, Snackbar.LENGTH_LONG).show();
                     } else if (response.body().errors[0].equals(ERROR_EMPRESA)) {
                         Snackbar.make(getView(), ERROR_EMPRESA, Snackbar.LENGTH_LONG).show();
+                    } else if (response.body().errors[0].equals(ERROR_NO_SE_PERMITE_REGISTRAR_DOS_VECES)) {
+                        Snackbar.make(getView(), ERROR_NO_SE_PERMITE_REGISTRAR_DOS_VECES, Snackbar.LENGTH_LONG).show();
+                    } else if (response.body().errors[0].equals(ERROR_YA_NO_QUEDAN_REGISTROS)) {
+                        Snackbar.make(getView(), ERROR_YA_NO_QUEDAN_REGISTROS, Snackbar.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                public void onFailure(Call<Response<Integer>> call, Throwable t) {
                     Snackbar.make(getView(), "Error al conectar", Snackbar.LENGTH_LONG).show();
                 }
             });

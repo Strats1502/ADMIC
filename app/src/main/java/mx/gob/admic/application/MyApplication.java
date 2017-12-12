@@ -21,6 +21,7 @@ import io.realm.Realm;
 import mx.gob.admic.R;
 import mx.gob.admic.fragments.DetalleConvocatoriaFragment;
 import mx.gob.admic.fragments.DetalleEventoFragment;
+import mx.gob.admic.fragments.HomeFragment;
 import mx.gob.admic.sesion.Sesion;
 import mx.gob.admic.utils.OKDialog;
 import retrofit2.Retrofit;
@@ -107,6 +108,7 @@ public class MyApplication extends MultiDexApplication {
     };
 
     public static String TIEMPO_CORREOS_CREDITO;
+    public static boolean enviarCorreos = true;
 
     public static CountDownTimer contadorCorreosCredito = new CountDownTimer(TIEMPO_RESTANTE_CORREOS_CREDITO, 100) {
         @Override
@@ -116,11 +118,14 @@ public class MyApplication extends MultiDexApplication {
             SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
             String formatted = formatter.format(date);
             TIEMPO_CORREOS_CREDITO = formatted;
+
+            enviarCorreos = false;
         }
 
         @Override
         public void onFinish() {
             TIEMPO_RESTANTE_CORREOS_CREDITO = minutes * 60000;
+            enviarCorreos = true;
         }
     };
     /**

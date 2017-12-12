@@ -169,7 +169,6 @@ public class SegundaActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        System.err.println("wergggggggggggggggggggggggggggggggggggggggggggggg");
         arePaused = true;
     }
 
