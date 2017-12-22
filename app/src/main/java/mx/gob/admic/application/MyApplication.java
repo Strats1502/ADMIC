@@ -61,7 +61,7 @@ public class MyApplication extends MultiDexApplication {
 
     //public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
 
-    private static int minutes = 5;
+    private static int minutes = 60;
     private static long TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;
     private static long TIEMPO_RESTANTE_CORREOS_EVENTOS = minutes * 60000;
     private static long TIEMPO_RESTANTE_CORREOS_CREDITO = minutes * 60000;
@@ -69,41 +69,24 @@ public class MyApplication extends MultiDexApplication {
     public static CountDownTimer contadorCorreosConvocatorias = new CountDownTimer(TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS, 100) {
         @Override
         public void onTick(long millisUntilFinished) {
-            TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = millisUntilFinished;
-
-            Date  date = new Date(TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS);
-            SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
-            String formatted = formatter.format(date);
-
-            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText("Espera para enviar otro correo - " + formatted);
-            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setEnabled(false);
         }
 
         @Override
         public void onFinish() {
-            TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;
-            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText(R.string.btn_quiero_mas_informacion);
             DetalleConvocatoriaFragment.btnQuieroMasInformacion.setEnabled(true);
+            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setBackgroundResource(R.drawable.bordered_button_blue);
         }
     };
 
     public static CountDownTimer contadorCorreosEventos = new CountDownTimer(TIEMPO_RESTANTE_CORREOS_EVENTOS, 100) {
         @Override
         public void onTick(long millisUntilFinished) {
-            TIEMPO_RESTANTE_CORREOS_EVENTOS = millisUntilFinished;
-            Date date = new Date(TIEMPO_RESTANTE_CORREOS_EVENTOS);
-            SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
-            String formatted = formatter.format(date);
-
-            DetalleEventoFragment.botonMeInteresa.setText("Espera para enviar otro correo - " + formatted);
-            DetalleEventoFragment.botonMeInteresa.setEnabled(false);
         }
 
         @Override
         public void onFinish() {
-            TIEMPO_RESTANTE_CORREOS_EVENTOS = minutes * 60000;
-            DetalleEventoFragment.botonMeInteresa.setText(R.string.me_interesa);
             DetalleEventoFragment.botonMeInteresa.setEnabled(true);
+            DetalleEventoFragment.botonMeInteresa.setBackgroundResource(R.drawable.bordered_button_blue);
         }
     };
 

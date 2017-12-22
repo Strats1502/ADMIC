@@ -111,7 +111,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
             inputGenero,
             inputFechaNacimiento,
             inputCurp,
-            inputMunicipio,
             inputEstado,
             inputCodigoGuanajoven;
 
@@ -209,7 +208,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputGenero = (TextView) vista.findViewById(R.id.tv_generoCG);
         inputFechaNacimiento = (TextView) vista.findViewById(R.id.tv_fechaCG);
         inputCurp = (TextView) vista.findViewById(R.id.tv_curpCG);
-        inputMunicipio = (TextView) vista.findViewById(R.id.tv_municipioCG);
         inputEstado = (TextView) vista.findViewById(R.id.tv_estadoCG);
         imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
         imagenUsuario = (CircleImageView) vista.findViewById(R.id.iv_imagenCG);

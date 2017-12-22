@@ -137,6 +137,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
                     Snackbar.make(getView(), $MENSAJE_ENVIADO, 7000).show();
+                    btnQuieroMasInformacion.setEnabled(false);
+                    btnQuieroMasInformacion.setBackgroundResource(R.drawable.bordered_button_gray);
                     MyApplication.contadorCorreosConvocatorias.start();
                     progressDialog.dismiss();
                 }

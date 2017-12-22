@@ -39,7 +39,7 @@
                 android:id="@+id/textview_area_responsable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_account_box_black_24dp"
+                android:drawableStart="@drawable/pgj_ic_user"
                 android:padding="5dp"
                 android:drawablePadding="5dp"
                 android:text="Área responsable"/>
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_place_white_24dp"
+                android:drawableStart="@drawable/pgj_ic_event"
                 android:padding="5dp"
                 android:text="Dirección del evento" />
 
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_description_32_px"
+                android:drawableStart="@drawable/pgj_ic_info"
                 android:padding="5dp"
                 android:text="Descripción del evento" />
 
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_evento_24_px"
+                android:drawableStart="@drawable/pgj_ic_event"
                 android:padding="5dp"
                 android:text="Fecha del evento" />
 

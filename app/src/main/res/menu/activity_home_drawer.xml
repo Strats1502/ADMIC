@@ -31,7 +31,6 @@
         <menu>
             <group android:checkableBehavior="single">
 
-
                 <item android:id="@+id/nav_mis_eventos"
                     android:icon="@drawable/ic_calendar"
                     android:title="@string/eventos"/>
@@ -62,6 +61,7 @@
                     android:id="@+id/nav_chat_ayuda"
                     android:icon="@drawable/chat_grey"
                     android:title="@string/chat" />
+
             </group>
         </menu>
     </item>

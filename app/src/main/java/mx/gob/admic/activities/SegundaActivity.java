@@ -129,7 +129,7 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_regiones:
-                    fragment = RegionFragment.newInstance(R.id.nav_regiones, R.string.regiones, RegionFragment.class);
+                    fragment = RegionFragment.newInstance(R.id.nav_regiones, R.string.sucursales, RegionFragment.class);
                     break;
                 case R.id.nav_chat_ayuda:
                     fragment = ChatFragment.newInstance(R.id.nav_chat_ayuda, R.string.chat, ChatFragment.class);

@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,9 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -35,7 +32,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.w3c.dom.Text;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,26 +45,19 @@ import mx.gob.admic.application.MyApplication;
 import mx.gob.admic.model.Evento;
 import mx.gob.admic.model.EventoResponse;
 import mx.gob.admic.sesion.Sesion;
+import mx.gob.admic.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Created by uriel on 21/06/16.
- */
 public class DetalleEventoFragment extends Fragment implements OnMapReadyCallback {
     private static String ID_EVENTO = "id_evento";
     private Evento evento;
     private MapFragment mapaEvento;
     private TextView tvNombreEvento;
-    private TextView textViewAreaResponsable;
     private TextView tvDireccionEvento;
     private TextView tvDescripcionEvento;
     private TextView tvFechaEvento;
-    private RecyclerView rvDocumentosEvento;
-    private RVDocumentoEventoAdapter adapter;
-    private TextView textViewNoHayDocumentos;
-
     private Button botonEstoyEnEvento;
     public static Button botonMeInteresa;
     private TextView textViewEventoCaducado;
@@ -78,18 +67,22 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     private static final int PERMISSION_REQUEST_CODE = 321;
     private double latitud;
     private double longitud;
-    private ProgressDialog progressDialog;
     private Retrofit retrofit;
     private EventoAPI eventoAPI;
-    private static final String ERROR_YA_REGISTRADO = "Ya has sido registrado";
-    private static final String ERROR_FUERA_DE_RANGO = "No te encuentras en el rango del evento";
+    private RecyclerView recyclerViewDocumentos;
+    private RVDocumentoEventoAdapter adapter;
+    private TextView textViewNoHayDocumentos;
 
     private Criteria criteria;
+
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    private static final String SYSTEM_DATE_FORMAT_24_HRS = "yyyy-MM-dd HH:mm:ss";
 
     public static DetalleEventoFragment newInstance(int idEvento) {
         DetalleEventoFragment detalleEventoFragment = new DetalleEventoFragment();
         Bundle args = new Bundle();
-        args.putInt(ID_EVENTO, idEvento);//cambia el valor de la variable por el id de la region seleccionada
+        args.putInt(ID_EVENTO, idEvento);
         detalleEventoFragment.setArguments(args);
         return detalleEventoFragment;
     }
@@ -114,8 +107,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 
-        progressDialog = new ProgressDialog(getContext());
-
         mapaEvento = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapa_evento);
         mapaEvento.getMapAsync(this);
 
@@ -127,42 +118,32 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         botonMeInteresa = (Button) v.findViewById(R.id.boton_me_interesa);
         textViewEventoCaducado = (TextView) v.findViewById(R.id.textview_evento_caducado);
         textViewYaHasSidoRegistrado = (TextView) v.findViewById(R.id.textview_registrado);
-        textViewAreaResponsable = (TextView) v.findViewById(R.id.textview_area_responsable);
-        rvDocumentosEvento = (RecyclerView) v.findViewById(R.id.rv_documentos_evento);
+        recyclerViewDocumentos = (RecyclerView) v.findViewById(R.id.rv_documentos_evento);
         textViewNoHayDocumentos = (TextView) v.findViewById(R.id.tv_empty_documentos);
 
-        adapter = new RVDocumentoEventoAdapter(getContext(), evento.getDocumentosEvento());
-
-        rvDocumentosEvento.setAdapter(adapter);
-        rvDocumentosEvento.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        if (evento.getDocumentosEvento().size() == 0) {
-            rvDocumentosEvento.setVisibility(View.GONE);
-            textViewNoHayDocumentos.setVisibility(View.VISIBLE);
-        }
-
         tvNombreEvento.setText(evento.getTitulo());
-
-        if (evento.getArea() != null) {
-            textViewAreaResponsable.setText(evento.getArea().getNombre());
-        } else {
-            textViewAreaResponsable.setText("Este evento no tiene un área responsable");
-        }
-
         tvDireccionEvento.setText(evento.getDireccion());
         tvDescripcionEvento.setText(evento.getDescripcion());
-        tvFechaEvento.setText(getFechaCast(evento.getFechaInicio()) + " - " + getFechaCast(evento.getFechaFin()));
+
+        String fechaEvento = getFechaCast(evento.getFechaInicio()) +
+                "-" +
+                getFechaCast(evento.getFechaFin());
+
+        tvFechaEvento.setText(fechaEvento);
 
         if (!usuarioRegistrado()) checkAsist();
 
         botonEstoyEnEvento.setOnClickListener((View) -> {
-            progressDialog = ProgressDialog.show(getContext(), "Cargando", "Obteniendo tu localización", true, true);
+            ProgressDialog dialog = ProgressDialog.show(getContext(),
+                    "Cargando",
+                    "Obteniendo tu localización", true, true);
 
             Call<Response<EventoResponse>> call = eventoAPI.marcarEvento(evento.getIdEvento(), Sesion.getUsuario().getApiToken(), getLatitud(), getLongitud());
 
             call.enqueue(new Callback<Response<EventoResponse>>() {
                 @Override
                 public void onResponse(Call<Response<EventoResponse>> call, retrofit2.Response<Response<EventoResponse>> response) {
+                    dialog.dismiss();
 
                     if (response.body() != null) {
                         if (response.body().errors.length == 0) {
@@ -171,28 +152,29 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                             String puntosFinal = String.valueOf(puntos + puntosUsuario);
                             Sesion.getUsuario().setPuntaje(puntosFinal);
 
-                            Snackbar.make(getView(), "Registrado!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getView(), "Registrado", 10000).show();
 
                             realm.beginTransaction();
                             evento.setEstaRegistrado(true);
                             realm.commitTransaction();
 
-                        } else if (response.body().errors[0].equals(ERROR_FUERA_DE_RANGO)) {
-                            Snackbar.make(getView(), ERROR_FUERA_DE_RANGO, Snackbar.LENGTH_LONG).show();
-                        } else if (response.body().errors[0].equals(ERROR_YA_REGISTRADO)) {
-                            Snackbar.make(getView(), ERROR_YA_REGISTRADO, Snackbar.LENGTH_LONG).show();
+                        } else if (response.body().errors[0].equals("No te encuentras en el rango del evento")) {
+                            Snackbar.make(getView(), "No te encuentras en el rango del evento", 10000).show();
+                        } else if (response.body().errors[0].equals("Ya has sido registrado")) {
+                            Snackbar.make(getView(), "Ya has sido registrado", 10000).show();
 
                             realm.beginTransaction();
                             evento.setEstaRegistrado(true);
                             realm.commitTransaction();
                         }
                     } else {
-                        Snackbar.make(getView(), "Ops! parece que ocurrio un error, intenta más tarde", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), "Ops! parece que ocurrio un error, intenta más tarde", 10000).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Response<EventoResponse>> call, Throwable t) {
+                    dialog.dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("Error de conexión");
                     builder.show();
@@ -202,7 +184,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         });
 
         botonMeInteresa.setOnClickListener((View) -> {
-            //Genera la llamada para poder enviar un correo
             ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Enviando correo");
             progressDialog.setMessage("Espera mientras enviamos un correo a tu cuenta registrada");
@@ -220,12 +201,25 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
                     Snackbar.make(getView(), "Gracias por estar interesado en el evento, en breve te llegará un correo electrónico con más información.", 7000).show();
+                    botonMeInteresa.setBackgroundResource(R.drawable.bordered_button_gray);
+                    botonMeInteresa.setEnabled(false);
                     MyApplication.contadorCorreosEventos.start();
                     progressDialog.dismiss();
                 }
             });
 
         });
+
+
+
+        if (evento.getDocumentosEvento().size() != 0) {
+            adapter = new RVDocumentoEventoAdapter(getContext(), evento.getDocumentosEvento());
+            recyclerViewDocumentos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            recyclerViewDocumentos.setAdapter(adapter);
+        } else {
+            recyclerViewDocumentos.setVisibility(View.GONE);
+            textViewNoHayDocumentos.setVisibility(View.VISIBLE);
+        }
 
         return v;
     }
@@ -287,13 +281,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
                             }
                         }, null);
-                        /*SingleShootLocationProvider.requestSingleUpdate(getContext(), new SingleShootLocationProvider.LocationCallBack() {
-                            @Override
-                            public void onNewLocationAvailable(GPSCoordinates location) {
-                                setLatitud(location.getLatitude());
-                                setLongitud(location.getLongitude());
-                            }
-                        });*/
+
                     } catch (SecurityException e) {
                         e.printStackTrace();
                     }
@@ -305,25 +293,12 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         }
     }
 
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         float zoomLevel = (float) 16.0;
-        LatLng coordenadas = new LatLng(evento.getLatitud(), evento.getLongitud()); //coordenadas de la región
-        googleMap.addMarker(new MarkerOptions().position(coordenadas).title(evento.getTitulo())); //pone el puntero en las coordenadas
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel)); //hace el zoom en el mapa
+        LatLng coordenadas = new LatLng(evento.getLatitud(), evento.getLongitud());
+        googleMap.addMarker(new MarkerOptions().position(coordenadas).title(evento.getTitulo()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel));
     }
 
     @Override
@@ -381,10 +356,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
                     }
                 }, null);
-                /*SingleShootLocationProvider.requestSingleUpdate(getContext(), location -> {
-                    setLatitud(location.getLatitude());
-                    setLongitud(location.getLongitude());
-                });*/
 
             } catch (SecurityException e) {
                 e.printStackTrace();
@@ -425,93 +396,18 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         return false;
     }
 
-    private static class SingleShootLocationProvider {
+    public static String getFechaCast(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat(SYSTEM_DATE_FORMAT);
+        SimpleDateFormat miFormato = new SimpleDateFormat(DATE_FORMAT);
 
-        interface LocationCallBack {
-             void onNewLocationAvailable(GPSCoordinates location);
+        try {
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        public static void requestSingleUpdate(final Context context, final LocationCallBack callBack) {
-            final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (isNetworkEnabled) {
-                Criteria criteria = new Criteria();
-                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-
-                locationManager.requestSingleUpdate(criteria, new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        callBack.onNewLocationAvailable(new GPSCoordinates(location.getLatitude(), location.getLongitude()));
-                    }
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-                    }
-
-                    @Override
-                    public void onProviderEnabled(String provider) {
-                    }
-
-                    @Override
-                    public void onProviderDisabled(String provider) {
-                    }
-                }, null);
-            } else {
-                boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-                if (isGPSEnabled) {
-                    Criteria criteria = new Criteria();
-                    criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-
-                    locationManager.requestSingleUpdate(criteria, new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            callBack.onNewLocationAvailable(new GPSCoordinates(location.getLatitude(), location.getLongitude()));
-                        }
-
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-                        @Override
-                        public void onProviderEnabled(String provider) {}
-
-                        @Override
-                        public void onProviderDisabled(String provider) {}
-
-                    }, null);
-                }
-            }
-
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            }
-
-        }
-
+        return null;
     }
 
-    private static class GPSCoordinates {
-        public float latitude = -1;
-        public float longitude = -1;
-
-        public GPSCoordinates(float latitude, float longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-
-        public GPSCoordinates(double latitude, double longitude) {
-            this.latitude = (float) latitude;
-            this.longitude = (float) longitude;
-        }
-
-        public float getLatitude() {
-            return this.latitude;
-        }
-
-        public float getLongitude() {
-            return this.longitude;
-        }
-
-    }
 
 }

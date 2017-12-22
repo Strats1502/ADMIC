@@ -32,8 +32,7 @@ public class RVDocumentoEventoAdapter extends RecyclerView.Adapter<RVDocumentoEv
     @Override
     public ViewHolderDocumentoEvento onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_documento, parent, false);
-        ViewHolderDocumentoEvento viewHolderDocumentoEvento = new ViewHolderDocumentoEvento(view);
-        return viewHolderDocumentoEvento;
+        return new ViewHolderDocumentoEvento(view);
     }
 
     @Override
