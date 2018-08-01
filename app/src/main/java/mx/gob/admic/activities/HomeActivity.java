@@ -48,11 +48,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.admic.R;
 import mx.gob.admic.api.NotificacionAPI;
 import mx.gob.admic.api.Response;
+import mx.gob.admic.api.UsuarioAPI;
 import mx.gob.admic.application.MyApplication;
 import mx.gob.admic.connection.ClienteHttp;
 import mx.gob.admic.fragments.HomeFragment;
 import mx.gob.admic.model.Usuario;
 import mx.gob.admic.model.Perfil;
+import mx.gob.admic.model.UsuarioPuntaje;
 import mx.gob.admic.notifications.FirebaseInstanceIDService;
 import mx.gob.admic.receivers.AlarmasBroadcastReceiver;
 import mx.gob.admic.sesion.Sesion;
@@ -81,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private SharedPreferences prefs;
 
     private Retrofit retrofit;
+    private UsuarioAPI usuarioAPI;
     private NotificacionAPI notificacionAPI;
 
     private CircleImageView imagenUsuarioDrawer;
@@ -89,10 +92,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private TextView puntajeDrawer;
     private TextView posicionDrawer;
 
+    int posicion;
+    int puntaje;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //Configuración de retrofit
+        retrofit = ((MyApplication) getApplication()).getRetrofitInstance();
+        notificacionAPI = retrofit.create(NotificacionAPI.class);
+        usuarioAPI = retrofit.create(UsuarioAPI.class);
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -110,12 +121,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setCheckedItem(R.id.nav_home);
 
         View headerLayout = navigationView.getHeaderView(0);
-
         imagenUsuarioDrawer = (CircleImageView) headerLayout.findViewById(R.id.circleimageview_imagen_usuario_drawer);
         nombreUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.textview_nombre_usuario_drawer);
         correoUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.textview_correo_usuario_drawer);
         puntajeDrawer = (TextView) headerLayout.findViewById(R.id.textview_puntaje_drawer);
         posicionDrawer = (TextView) headerLayout.findViewById(R.id.textview_posicion_drawer);
+
+        Call<Response<UsuarioPuntaje>> call = usuarioAPI.getPosicionPuntaje(Sesion.getUsuario().getApiToken());
+
+        call.enqueue(new Callback<Response<UsuarioPuntaje>>() {
+            @Override
+            public void onResponse(Call<Response<UsuarioPuntaje>> call, retrofit2.Response<Response<UsuarioPuntaje>> response) {
+                puntaje = response.body().data.getPuntaje();
+                posicion = response.body().data.getPosicion();
+
+                puntajeDrawer.setText("Puntaje: " + String.valueOf(puntaje));
+                posicionDrawer.setText("Posición: " + String.valueOf(posicion));
+            }
+
+            @Override
+            public void onFailure(Call<Response<UsuarioPuntaje>> call, Throwable t) {
+
+            }
+        });
+
 
         //Si no se ha iniciado la Activity genera una nueva (Evita generar nuevas al rotar la pantalla).
         if (savedInstanceState == null) {
@@ -139,9 +168,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             prefs.edit().putBoolean(INSTRUCCIONES_CHECK, true).commit();
         }*/
 
-        //Configuración de retrofit
-        retrofit = ((MyApplication) getApplication()).getRetrofitInstance();
-        notificacionAPI = retrofit.create(NotificacionAPI.class);
 
     }
 
@@ -277,12 +303,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Picasso.with(getApplicationContext()).load(usuario.getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
         }
 
-        String posicion = Sesion.getUsuario().getPosicion() == null ? "0" : Sesion.getUsuario().getPosicion();
-
         nombreUsuarioDrawer.setText(usuario.getDatosUsuario().getNombre() + " " + usuario.getDatosUsuario().getApellidoPaterno() + " " + usuario.getDatosUsuario().getApellidoMaterno());
         correoUsuarioDrawer.setText(usuario.getEmail());
-        puntajeDrawer.setText("Puntos: " + usuario.getPuntaje());
-        posicionDrawer.setText("Posición N° " + posicion);
 
 
         if (!lessThan30Years(getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {

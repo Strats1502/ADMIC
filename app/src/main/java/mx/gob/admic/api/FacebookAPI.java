@@ -10,12 +10,12 @@ import retrofit2.http.Query;
 
 public interface FacebookAPI {
 
-    @GET("/admicleon/posts")
+    @GET("v2.11/admicleon/posts")
     Call<ResponseFacebook> getPosts(
             @Query("access_token") String accessToken
     );
 
-    @GET("/admicleon/posts")
+    @GET("v2.11/admicleon/posts")
     Call<ResponseFacebook> getNextPosts (
             @Query("access_token") String accessToken,
             @Query("after") String after

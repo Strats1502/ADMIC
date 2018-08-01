@@ -1,8 +1,5 @@
 package mx.gob.admic.api;
 
-import java.util.List;
-
-import mx.gob.admic.model.YoutubeChannel;
 import mx.gob.admic.model.YoutubePageInfo;
 
 /**

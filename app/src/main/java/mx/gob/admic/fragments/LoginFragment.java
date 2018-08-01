@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -554,11 +555,13 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                     if(loginSimplePd != null){
                         loginSimplePd.dismiss();
                     }
+                    Log.e("Error de google", new Gson().toJson(result));
                     OKDialog.showOKDialog(getActivity(), "Error", "Error en la conexión, favor de revisar más adelante.");
                 }
             });
 
         } else {
+            Log.e("Error de google", new Gson().toJson(result));
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Error al intentar obtener tus datos, intenta más adelante.")
                     .setCancelable(false)

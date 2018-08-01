@@ -3,6 +3,7 @@ package mx.gob.admic.api;
 import org.json.JSONObject;
 
 import mx.gob.admic.model.Usuario;
+import mx.gob.admic.model.UsuarioPuntaje;
 import mx.gob.admic.model.models_tmp.Curp;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -106,6 +107,11 @@ public interface UsuarioAPI {
 
     @POST("credito/enviar")
     Call<Response<Boolean>> solicitarCredito (
+            @Query("api_token") String apiToken
+    );
+
+    @POST("usuarios/posicionpuntaje")
+    Call<Response<UsuarioPuntaje>> getPosicionPuntaje (
             @Query("api_token") String apiToken
     );
 }

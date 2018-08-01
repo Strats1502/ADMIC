@@ -13,13 +13,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.app.FragmentManager;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,24 +25,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import mx.gob.admic.R;
-import mx.gob.admic.adapters.RVIdiomasSeleccionadosAdapter;
 import mx.gob.admic.api.RegistroModificarPerfil;
 import mx.gob.admic.api.Response;
 import mx.gob.admic.application.MyApplication;
 import mx.gob.admic.model.DatosModificarPerfil;
 import mx.gob.admic.sesion.Sesion;
-import mx.gob.admic.utils.EditTextValidations;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -73,35 +65,22 @@ public class EditarDatosFragment extends CustomFragment {
     private CircleImageView imgPerfil;
 
     private MaterialSpinner spnNivelEstudios;
-    private MaterialSpinner spnConfirmProgramaGobierno;
-    private MaterialSpinner spnProgramaGobierno;
-    private MaterialSpinner spnTrabaja;
-    private MaterialSpinner spnConfirmPuebloIndigena;
-    private MaterialSpinner spnPuebloIndigena;
-    private MaterialSpinner spnConfirmCapacidadDiferente;
-    private MaterialSpinner spnCapacidadDiferente;
-    private MaterialSpinner spnConfirmPremios;
-    private EditText etPremios;
-    private MaterialSpinner spnConfirmProyectosSociales;
-    private EditText etProyectosSociales;
-    private MaterialSpinner spnSueldoProyectosSociales;
     private ProgressDialog progressDialog;
 
-    private Button btnSeleccionarIdiomas;
+    private EditText editTextCalle;
+    private EditText editTextColonia;
+    private EditText editTextCiudad;
+    private EditText editTextEmpresa;
+    private EditText editTextActividad;
+    private EditText editTextNumEmpleados;
+    private EditText editTextRFC;
+    private EditText editTextAntiguedad;
 
     private RegistroModificarPerfil registroModificarPerfilAPI;
 
     private String[] siNo = {"Sí", "No"};
     private String[] nivelesEstudio = {"Primaria", "Secundaria", "Preparatoria", "TSU", "Universidad", "Maestría", "Doctorado", "Otro"};
-    private String[] programasGobierno = {"Municipal", "Estatal", "Federal", "Internacional"};
-    private String[] pueblosIndigenas = {"Otomí", "Chichimeca-Jonaz", "Náhuatl", "Mazahua", "Otra"};
-    private String[] capacidadesDiferentes = {"Física", "Sensorial", "Auditiva", "Visual", "Psíquica", "Intelectual", "Mental"};
-
-    public static TextView textViewTituloIdiomasSeleccionados;
-    public static LinearLayout layoutTablas;
-    public static RecyclerView recyclerViewIdiomasSeleccionados;
     public static Activity thisActivity;
-    public static RVIdiomasSeleccionadosAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,85 +97,23 @@ public class EditarDatosFragment extends CustomFragment {
 
         btnContinuar = (Button) v.findViewById(R.id.btn_continuar);
         spnNivelEstudios = (MaterialSpinner) v.findViewById(R.id.spn_nivel_estudios);
-        spnConfirmProgramaGobierno = (MaterialSpinner) v.findViewById(R.id.spn_confirm_programa_gobierno);
-        spnProgramaGobierno = (MaterialSpinner) v.findViewById(R.id.spn_programa_gobierno);
-        spnTrabaja = (MaterialSpinner) v.findViewById(R.id.spn_trabaja);
-        spnConfirmPuebloIndigena = (MaterialSpinner) v.findViewById(R.id.spn_confirm_pueblo_indigena);
-        spnPuebloIndigena = (MaterialSpinner) v.findViewById(R.id.spn_pueblo_indigena);
-        spnConfirmCapacidadDiferente = (MaterialSpinner) v.findViewById(R.id.spn_confirm_capacidad_diferente);
-        spnCapacidadDiferente = (MaterialSpinner) v.findViewById(R.id.spn_capacidad_diferente);
-        spnConfirmPremios = (MaterialSpinner) v.findViewById(R.id.spn_confirm_premios);
-        spnConfirmProyectosSociales = (MaterialSpinner) v.findViewById(R.id.spn_confirm_proyectos_sociales);
-        spnSueldoProyectosSociales = (MaterialSpinner) v.findViewById(R.id.spn_sueldo_proyectos_sociales);
-        etPremios = (EditText) v.findViewById(R.id.et_premios);
-        etProyectosSociales = (EditText) v.findViewById(R.id.et_proyecto_social);
-        btnSeleccionarIdiomas = (Button) v.findViewById(R.id.btn_seleccionar_idiomas);
-
         imgPerfil = (CircleImageView) v.findViewById(R.id.imagen_usuario);
+        editTextCalle = (EditText) v.findViewById(R.id.et_calle);
+        editTextColonia = (EditText) v.findViewById(R.id.et_colonia);
+        editTextCiudad = (EditText) v.findViewById(R.id.et_ciudad);
+        editTextEmpresa = (EditText) v.findViewById(R.id.et_empresa);
+        editTextActividad = (EditText) v.findViewById(R.id.et_actividad);
+        editTextNumEmpleados = (EditText) v.findViewById(R.id.et_numero_empleados);
+        editTextRFC = (EditText) v.findViewById(R.id.et_rfc);
+        editTextAntiguedad = (EditText) v.findViewById(R.id.et_antiguedad);
 
         ArrayAdapter<String> siNoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, siNo);
         ArrayAdapter<String> nivelEstudioAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, nivelesEstudio);
-        ArrayAdapter<String> programaGobiernoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, programasGobierno);
-        ArrayAdapter<String> pueblosIndigenasAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, pueblosIndigenas);
-        ArrayAdapter<String> capacidadesDiferentesAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, capacidadesDiferentes);
 
         siNoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         nivelEstudioAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        programaGobiernoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        pueblosIndigenasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        capacidadesDiferentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spnNivelEstudios.setAdapter(nivelEstudioAdapter);
-        spnProgramaGobierno.setAdapter(programaGobiernoAdapter);
-        spnPuebloIndigena.setAdapter(pueblosIndigenasAdapter);
-        spnCapacidadDiferente.setAdapter(capacidadesDiferentesAdapter);
-        spnConfirmProgramaGobierno.setAdapter(siNoAdapter);
-        spnTrabaja.setAdapter(siNoAdapter);
-        spnConfirmPuebloIndigena.setAdapter(siNoAdapter);
-        spnConfirmCapacidadDiferente.setAdapter(siNoAdapter);
-        spnConfirmPremios.setAdapter(siNoAdapter);
-        spnConfirmProyectosSociales.setAdapter(siNoAdapter);
-        spnSueldoProyectosSociales.setAdapter(siNoAdapter);
-
-        EditTextValidations.dependencySpinners(spnConfirmProgramaGobierno, new View[]{spnProgramaGobierno});
-        EditTextValidations.dependencySpinners(spnConfirmPuebloIndigena, new View[]{spnPuebloIndigena});
-        EditTextValidations.dependencySpinners(spnConfirmCapacidadDiferente, new View[]{spnCapacidadDiferente});
-        EditTextValidations.dependencySpinners(spnConfirmPremios, new View[]{etPremios});
-        EditTextValidations.dependencySpinners(spnConfirmProyectosSociales, new View[]{etProyectosSociales, spnSueldoProyectosSociales});
-
-        textViewTituloIdiomasSeleccionados = (TextView) v.findViewById(R.id.textview_titulo_idiomas_seleccionados);
-        layoutTablas = (LinearLayout) v.findViewById(R.id.layout_tabla);
-        recyclerViewIdiomasSeleccionados = (RecyclerView) v.findViewById(R.id.rv_idiomas_seleccionados);
-
-        btnSeleccionarIdiomas.setOnClickListener((View) -> {
-            if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
-                //En caso de que ya halla puesto idiomas le saldra una alerta
-                AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
-                alerta.setMessage("Tienes idiomas seleccionados, en caso de aceptar se eliminaran, ¿Estás de acuerdo?");
-
-                alerta.setPositiveButton("Aceptar", (dialog, which) -> {
-                    IdiomasAdicionalesDialogFragment.datosIdiomas.clear();
-                    adapter.notifyDataSetChanged();
-
-                    textViewTituloIdiomasSeleccionados.setVisibility(android.view.View.GONE);
-                    layoutTablas.setVisibility(android.view.View.GONE);
-                    recyclerViewIdiomasSeleccionados.setVisibility(android.view.View.GONE);
-
-                    FragmentManager fragmentManager = getActivity().getFragmentManager();
-                    IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
-                    idiomasAdicionalesDialogFragment.show(fragmentManager, null);
-                });
-
-                alerta.show();
-
-            } else {
-                AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-                AlertDialog a = b.create();
-                FragmentManager fragmentManager = getActivity().getFragmentManager();
-                IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
-                idiomasAdicionalesDialogFragment.show(fragmentManager, null);
-            }
-        });
 
         imgPerfil.setOnClickListener((View) -> { selectImage(); });
 
@@ -204,7 +121,7 @@ public class EditarDatosFragment extends CustomFragment {
             botonGuardar();
         }));
 
-        //Picasso.with(getActivity()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imgPerfil);
+        Picasso.with(getActivity()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imgPerfil);
 
         cargarDatos();
 
@@ -423,31 +340,7 @@ public class EditarDatosFragment extends CustomFragment {
             progressDialog.dismiss();
             progressDialog = null;
         }
-        //Limpia el arreglo de idiomas para que cuando vuelva a abrir el fragment se encuentre vacio
-        if (IdiomasAdicionalesDialogFragment.datosIdiomas != null) {
-            IdiomasAdicionalesDialogFragment.datosIdiomas.clear();
-        }
 
-    }
-
-    //Cuando el usuario comience a ingresar idiomas o cuando los quite, actualiza la vista
-    public static void validarIdiomas() {
-        if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
-            textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
-            layoutTablas.setVisibility(View.VISIBLE);
-            recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
-
-            LinearLayoutManager llm = new LinearLayoutManager(thisActivity);
-            adapter = new RVIdiomasSeleccionadosAdapter(thisActivity, IdiomasAdicionalesDialogFragment.datosIdiomas);
-            recyclerViewIdiomasSeleccionados.setLayoutManager(llm);
-            recyclerViewIdiomasSeleccionados.setAdapter(adapter);
-            textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
-            recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
-        } else {
-            textViewTituloIdiomasSeleccionados.setVisibility(View.GONE);
-            layoutTablas.setVisibility(View.GONE);
-            recyclerViewIdiomasSeleccionados.setVisibility(View.GONE);
-        }
     }
 
     //Método para el botón de guardar
@@ -480,31 +373,18 @@ public class EditarDatosFragment extends CustomFragment {
 
         String apiToken = Sesion.getUsuario().getApiToken();
         int nivelEstudios = spnNivelEstudios.getSelectedItemPosition();
-        int beneficiarioPrograma = spnProgramaGobierno.getSelectedItemPosition();
-        int trabajo;
-
-        if (spnTrabaja.getSelectedItemPosition() == 1) {
-            trabajo = 1;
-        } else {
-            trabajo = 0;
-        }
-
-        int idPuebloIndigena = spnPuebloIndigena.getSelectedItemPosition();
-        int idCapacidadDiferente = spnCapacidadDiferente.getSelectedItemPosition();
-        String premios = etPremios.getText().toString();
-        String proyectos = etProyectosSociales.getText().toString();
-        int apoyoProyecto;
         String rutaImagen = "data:image/jpeg;base64," + getBase64(imgPerfil);
+        String calle = editTextCalle.getText().toString();
+        String colonia = editTextColonia.getText().toString();
+        String ciudad = editTextCiudad.getText().toString();
+        String empresa = editTextEmpresa.getText().toString();
+        String actividad = editTextActividad.getText().toString();
+        int numeroEmpleados = Integer.valueOf(editTextNumEmpleados.getText().toString());
+        String rfc = editTextRFC.getText().toString();
+        int antiguedad = Integer.valueOf(editTextAntiguedad.getText().toString());
 
-
-
-        if (spnSueldoProyectosSociales.getSelectedItemPosition() == 1) {
-            apoyoProyecto = 1;
-        } else {
-            apoyoProyecto = 0;
-        }
-
-        DatosModificarPerfil datosModificarPerfil = new DatosModificarPerfil(apiToken, nivelEstudios, beneficiarioPrograma, trabajo, idPuebloIndigena, idCapacidadDiferente, premios, proyectos, apoyoProyecto, IdiomasAdicionalesDialogFragment.datosIdiomas, rutaImagen);
+        DatosModificarPerfil datosModificarPerfil = new DatosModificarPerfil(
+                apiToken, rutaImagen, nivelEstudios, calle, colonia, ciudad, empresa, actividad, numeroEmpleados, rfc, antiguedad);
 
         Call<Response<Boolean>> callRegistrar = registroModificarPerfilAPI.postModificarPerfil(datosModificarPerfil);
 
@@ -550,13 +430,21 @@ public class EditarDatosFragment extends CustomFragment {
     //Métodos para verificar que ingrese todos los datos
     private boolean datosCompletos() {
         if (confirmoNivelEstudios()) {
-            if (confirmoBeneficiario()) {
-                if (confirmoTrabajo()) {
-                    if (confirmoPuebloIndigena()) {
-                        if (confirmoCapacidadDiferente()) {
-                            if (confirmoPremios()) {
-                                if (confirmoProyectos()) {
-                                    return true;
+            if (!editTextCalle.getText().toString().isEmpty()) {
+                if (!editTextColonia.getText().toString().isEmpty()) {
+                    if (!editTextCiudad.getText().toString().isEmpty()) {
+                        if (!editTextEmpresa.getText().toString().isEmpty()) {
+                            if (!editTextActividad.getText().toString().isEmpty()) {
+                                if (!editTextNumEmpleados.getText().toString().isEmpty()) {
+                                    if (!editTextRFC.getText().toString().isEmpty()) {
+                                        if (!editTextAntiguedad.getText().toString().isEmpty()) {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    } else {
+                                        return false;
+                                    }
                                 } else {
                                     return false;
                                 }
@@ -588,159 +476,18 @@ public class EditarDatosFragment extends CustomFragment {
         }
     }
 
-    private boolean confirmoBeneficiario() {
-        if (spnConfirmProgramaGobierno.getSelectedItemPosition() != 0) {
-            if (spnConfirmProgramaGobierno.getSelectedItemPosition() == 1) {
-                if (seleccionoTipoBeneficiario()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    private boolean confirmoTrabajo() {
-        if (spnTrabaja.getSelectedItemPosition() != 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean confirmoPuebloIndigena() {
-        if (spnConfirmPuebloIndigena.getSelectedItemPosition() != 0) {
-            if (spnConfirmPuebloIndigena.getSelectedItemPosition() == 1) {
-                if (seleccionoPuebloIndigena()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    private boolean confirmoCapacidadDiferente() {
-        if (spnConfirmCapacidadDiferente.getSelectedItemPosition() != 0) {
-            if (spnConfirmCapacidadDiferente.getSelectedItemPosition() == 1) {
-                if (seleccionoCapacidadDiferente()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    private boolean confirmoPremios() {
-        if (spnConfirmPremios.getSelectedItemPosition() != 0) {
-            if (spnConfirmPremios.getSelectedItemPosition() == 1) {
-                if (ingresoPremios()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    private boolean confirmoProyectos() {
-        if (spnConfirmProyectosSociales.getSelectedItemPosition() != 0) {
-            if (spnConfirmProyectosSociales.getSelectedItemPosition() == 1) {
-                if (ingresoProyectos()) {
-                    if (seleccionoApoyo()) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    private boolean seleccionoTipoBeneficiario() {
-        return spnProgramaGobierno.getSelectedItemPosition() != 0;
-    }
-
-    private boolean seleccionoPuebloIndigena() {
-        return spnPuebloIndigena.getSelectedItemPosition() != 0;
-    }
-
-    private boolean seleccionoCapacidadDiferente() {
-        return spnCapacidadDiferente.getSelectedItemPosition() != 0;
-    }
-
-    private boolean ingresoPremios() {
-        return !(etPremios.getText().toString().equals(""));
-    }
-
-    private boolean ingresoProyectos() {
-        return !(etProyectosSociales.getText().toString().equals(""));
-    }
-
-    private boolean seleccionoApoyo() {
-        return spnSueldoProyectosSociales.getSelectedItemPosition() != 0;
-    }
-
     //método para establecer los datos en los spinners y los textview
     private void asignarDatos(DatosModificarPerfil datosModificarPerfil) {
         if (datosModificarPerfil.getIdNivelEstudios() == 0) { spnNivelEstudios.setSelection(8); } else { spnNivelEstudios.setSelection(datosModificarPerfil.getIdNivelEstudios()); }
-        if (datosModificarPerfil.getIdProgramaGobierno() != 0) { spnConfirmProgramaGobierno.setSelection(1); } else spnConfirmProgramaGobierno.setSelection(2);
-        if (datosModificarPerfil.getTrabajo() == 0) spnTrabaja.setSelection(2); else spnTrabaja.setSelection(datosModificarPerfil.getTrabajo());
-        if (datosModificarPerfil.getIdPuebloIndigena() != 0) spnConfirmPuebloIndigena.setSelection(1); else spnConfirmPuebloIndigena.setSelection(2);
-        if (datosModificarPerfil.getIdCapacidadDiferente() != 0) spnConfirmCapacidadDiferente.setSelection(1); else spnConfirmCapacidadDiferente.setSelection(2);
-        if (datosModificarPerfil.getApoyoProyectosSociales() == 0) spnSueldoProyectosSociales.setSelection(2); else spnSueldoProyectosSociales.setSelection(1);
-        if (datosModificarPerfil.getPremios() != null) { spnConfirmPremios.setSelection(1); etPremios.setText(datosModificarPerfil.getPremios()); } else spnConfirmPremios.setSelection(2);
-        if (datosModificarPerfil.getProyectosSociales() != null) { spnConfirmProyectosSociales.setSelection(1); etProyectosSociales.setText(datosModificarPerfil.getProyectosSociales()); } else spnConfirmProyectosSociales.setSelection(2);
-
-        if (datosModificarPerfil.getIdiomas().size() > 0) {
-            IdiomasAdicionalesDialogFragment.datosIdiomas = new ArrayList<>();
-
-            textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
-            layoutTablas.setVisibility(View.VISIBLE);
-            recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
-
-            LinearLayoutManager llm = new LinearLayoutManager(thisActivity);
-            adapter = new RVIdiomasSeleccionadosAdapter(thisActivity, IdiomasAdicionalesDialogFragment.datosIdiomas);
-            recyclerViewIdiomasSeleccionados.setLayoutManager(llm);
-            recyclerViewIdiomasSeleccionados.setAdapter(adapter);
-            textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
-            recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
-
-            IdiomasAdicionalesDialogFragment.datosIdiomas.addAll(datosModificarPerfil.getIdiomas());
-            adapter.notifyDataSetChanged();
-        }
-
-        spnPuebloIndigena.setSelection(datosModificarPerfil.getIdPuebloIndigena());
-        spnCapacidadDiferente.setSelection(datosModificarPerfil.getIdCapacidadDiferente());
-        spnProgramaGobierno.setSelection(datosModificarPerfil.getIdProgramaGobierno());
-
-        Picasso.with(getContext()).load(datosModificarPerfil.getRutaImagen()).into(imgPerfil);
-
-        Sesion.getUsuario().getDatosUsuario().setRutaImagen(datosModificarPerfil.getRutaImagen());
-
+        if (datosModificarPerfil.getCalle() != null) editTextCalle.setText(datosModificarPerfil.getCalle());
+        if (datosModificarPerfil.getColonia() != null) editTextColonia.setText(datosModificarPerfil.getColonia());
+        if (datosModificarPerfil.getCiudad() != null) editTextCiudad.setText(datosModificarPerfil.getCiudad());
+        if (datosModificarPerfil.getEmpresa() != null) editTextEmpresa.setText(datosModificarPerfil.getEmpresa());
+        if (datosModificarPerfil.getActividad() != null) editTextActividad.setText(datosModificarPerfil.getActividad());
+        if (datosModificarPerfil.getNumEmpleados() != 0) editTextNumEmpleados.setText(String.valueOf(datosModificarPerfil.getNumEmpleados()));
+        if (datosModificarPerfil.getRfc() != null) editTextRFC.setText(datosModificarPerfil.getRfc());
+        if (datosModificarPerfil.getAntiguedad() != 0) editTextAntiguedad.setText(String.valueOf(datosModificarPerfil.getAntiguedad()));
+        if (datosModificarPerfil.getRutaImagen() != null) Sesion.getUsuario().getDatosUsuario().setRutaImagen(datosModificarPerfil.getRutaImagen());
     }
 
 }

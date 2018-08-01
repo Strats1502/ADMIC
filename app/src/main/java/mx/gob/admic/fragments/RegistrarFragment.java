@@ -302,13 +302,29 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String yearString = String.valueOf(year);
-                String monthString = String.valueOf(month);
+                String monthString = String.valueOf(month + 1);
                 String dayString = String.valueOf(dayOfMonth);
 
                 etFechaNacimiento.setText(dayString + "/" + monthString + "/" + yearString);
             }
         };
 
+        etFechaNacimiento.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (view.isFocused()) {
+                    Calendar calendar = new GregorianCalendar().getInstance();
+                    DatePickerDialog datePicker = new DatePickerDialog(getContext(), datePickerListener,
+                            calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH));
+
+                    datePicker.setCancelable(false);
+                    datePicker.setTitle("Fecha de nacimiento");
+                    datePicker.show();
+                }
+            }
+        });
 
         etFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -322,9 +338,9 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                 datePicker.setCancelable(false);
                 datePicker.setTitle("Fecha de nacimiento");
                 datePicker.show();
-
             }
         });
+
 
         EditTextValidations.removeErrorTyping(etCurp);
         EditTextValidations.removeErrorTyping(etEmail);

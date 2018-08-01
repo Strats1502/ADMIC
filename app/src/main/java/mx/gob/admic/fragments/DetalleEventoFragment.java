@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,17 +148,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
                     if (response.body() != null) {
                         if (response.body().errors.length == 0) {
-                            int puntos = response.body().data.getPuntosOtorgados();
-                            int puntosUsuario = Integer.parseInt(Sesion.getUsuario().getPuntaje());
-                            String puntosFinal = String.valueOf(puntos + puntosUsuario);
-                            Sesion.getUsuario().setPuntaje(puntosFinal);
-
                             Snackbar.make(getView(), "Registrado", 10000).show();
-
-                            realm.beginTransaction();
-                            evento.setEstaRegistrado(true);
-                            realm.commitTransaction();
-
                         } else if (response.body().errors[0].equals("No te encuentras en el rango del evento")) {
                             Snackbar.make(getView(), "No te encuentras en el rango del evento", 10000).show();
                         } else if (response.body().errors[0].equals("Ya has sido registrado")) {
@@ -209,8 +200,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             });
 
         });
-
-
 
         if (evento.getDocumentosEvento().size() != 0) {
             adapter = new RVDocumentoEventoAdapter(getContext(), evento.getDocumentosEvento());

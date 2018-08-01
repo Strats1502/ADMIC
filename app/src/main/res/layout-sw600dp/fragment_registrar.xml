@@ -230,7 +230,8 @@
                     android:typeface="normal"
                     android:textColorHint="@color/gray"
                     android:textSize="20sp"
-                    android:hint="Fecha de nacimiento" />
+                    android:hint="Fecha de nacimiento"
+                    android:editable="false"/>
             </android.support.design.widget.TextInputLayout>
 
             <fr.ganfra.materialspinner.MaterialSpinner

@@ -16,8 +16,6 @@ public class Usuario {
     private String email;
     private int admin;
     private String apiToken;
-    private String puntaje;
-    private String posicion;
     private DatosUsuario datosUsuario;
     private CodigoGuanajoven codigoGuanajoven;
     private String idGoogle;
@@ -87,19 +85,4 @@ public class Usuario {
         this.idFacebook = idFacebook;
     }
 
-    public String getPuntaje() {
-        return puntaje;
-    }
-
-    public void setPuntaje(String puntaje) {
-        this.puntaje = puntaje;
-    }
-
-    public String getPosicion() {
-        return posicion;
-    }
-
-    public void setPosicion(String posicion) {
-        this.posicion = posicion;
-    }
 }

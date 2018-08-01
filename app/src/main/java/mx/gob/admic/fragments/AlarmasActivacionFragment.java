@@ -43,20 +43,17 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
     private AlarmasDBHelper dbHelper;
     private Usuario sesion;
     private SharedPreferences prefs;
-    private FloatingActionButton fab;
     private TextView emptyView;
     public static int positionSel = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        fab.setVisibility(View.GONE);
     }
 
     @Override
@@ -72,8 +69,6 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
         rv = (RecyclerView) v.findViewById(R.id.rv_alarmas);
         emptyView = (TextView) v.findViewById(R.id.empty_view);
         //Se hace el inflate del FAB creado en los recursos y se añade al CoordinatorLayout de la activity.
-        fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
-        fab.setVisibility(View.VISIBLE);
 
         if(alarmas.size() == 0){
             rv.setVisibility(View.GONE);
@@ -85,24 +80,6 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
         adapter = new RVAlarmaAdapter(alarmas);
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog dpd = TimePickerDialog.newInstance(
-                        AlarmasActivacionFragment.this,
-                        now.get(Calendar.HOUR_OF_DAY),
-                        now.get(Calendar.MINUTE),
-                        false
-                );
-
-                dpd.show(getActivity().getFragmentManager(), "Timepickerdialog");
-            }
-        });
-
         return v;
     }
 

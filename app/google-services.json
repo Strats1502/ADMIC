@@ -1,66 +1,35 @@
 {
   "project_info": {
-    "project_number": "686001899882",
-    "firebase_url": "https://guanajoven-161821.firebaseio.com",
-    "project_id": "guanajoven-161821",
-    "storage_bucket": "guanajoven-161821.appspot.com"
+    "project_number": "318327579781",
+    "firebase_url": "https://admic-eeb98.firebaseio.com",
+    "project_id": "admic-eeb98",
+    "storage_bucket": "admic-eeb98.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:686001899882:android:cc739f1a36108a5a",
-        "android_client_info": {
-          "package_name": "mx.gob.jovenes.guanajuato"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "686001899882-hhk3skc6par3kd04h2023lmrsvd34000.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAD8VtkL2DsFglm763iWGPVUrdv4YGA-gs"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:686001899882:android:1dda71365e4ac903",
+        "mobilesdk_app_id": "1:318327579781:android:1dda71365e4ac903",
         "android_client_info": {
           "package_name": "mx.gob.admic"
         }
       },
       "oauth_client": [
         {
-          "client_id": "686001899882-jmt6vcq9c1o5fpmhs9j9mocv2q29upo1.apps.googleusercontent.com",
+          "client_id": "318327579781-rn6u5e3k6em0fu62e8q3oktreje47ej5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "mx.gob.admic",
-            "certificate_hash": "610e60470618274f8a9ed6a66b39a772fa20a462"
+            "certificate_hash": "92e45520bab76b364290e4445657f5f626455458"
           }
         },
         {
-          "client_id": "686001899882-hhk3skc6par3kd04h2023lmrsvd34000.apps.googleusercontent.com",
+          "client_id": "318327579781-a77ok92lj7ek9famajoei7dk51sk0f8v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAD8VtkL2DsFglm763iWGPVUrdv4YGA-gs"
+          "current_key": "AIzaSyAC3a2iiHUyEMgzSEuaVsEuqXbxkvKtktg"
         }
       ],
       "services": {
@@ -71,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "686001899882-hhk3skc6par3kd04h2023lmrsvd34000.apps.googleusercontent.com",
+              "client_id": "318327579781-a77ok92lj7ek9famajoei7dk51sk0f8v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

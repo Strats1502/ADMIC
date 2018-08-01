@@ -35,10 +35,11 @@
     <string name="hint_email">Email</string>
     <string name="hint_passwordconfirmar">Confirmar Contraseña</string>
     <!--<string name="facebook_app_id">203591490120675</string>-->
-    <string name="facebook_app_id">1547755481949405</string>
-    <string name="fb_login_protocol_scheme">fb1547755481949405</string>
 
-    <string name="api_key">AIzaSyDKAbShlitmin_wsoxRxHLmdi7Ieynn3cY</string>
+    <string name="facebook_app_id">203591490120675</string>
+    <string name="fb_login_protocol_scheme">fb203591490120675</string>
+
+    <string name="api_key">AIzaSyAC3a2iiHUyEMgzSEuaVsEuqXbxkvKtktg</string>
 
 
     <string name="datos_usuario">Datos de usuario</string>
@@ -478,6 +479,6 @@ Como pueden ser:
 
     <!--Fragment facebook-->
     <string name="fragment_facebook_pipe">|</string>
-    <string name="facebook_app_secret">d0a9689fb2057dacf88969ecd22e4e53</string>
+    <string name="facebook_app_secret">a909222218ad39a1de0767ea41a679b1</string>
 
 </resources>

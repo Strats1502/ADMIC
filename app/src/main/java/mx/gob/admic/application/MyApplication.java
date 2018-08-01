@@ -53,8 +53,9 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://10.0.7.131/GuanajovenWeb/public/api/";
 
     //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
-    public static final String BASE_URL = "http://10.0.7.40/admicweb/public/api/";
-    public static final String FACEBOOK_BASE_URL = "https://graph.facebook.com/v2.11/";
+    public static final String BASE_URL = "http://admic.dyndns.org/api/";
+    //public static final String BASE_URL = "http://admic.dyndns.org/api/";
+    public static final String FACEBOOK_BASE_URL = "https://graph.facebook.com/";
     public static final String YOUTUBE_BASE_URL = "https://www.googleapis.com/youtube/v3/";
     //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 

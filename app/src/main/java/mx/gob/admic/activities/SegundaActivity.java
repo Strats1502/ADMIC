@@ -89,20 +89,6 @@ public class SegundaActivity extends AppCompatActivity {
         Fragment fragment = null;
         int id = getIntent().getExtras().getInt(HomeActivity.MENU_ID);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    FragmentManager fm = getSupportFragmentManager();
-                    NuevoEventoDialogFragment f = new NuevoEventoDialogFragment();
-                    f.show(fm, "Nuevo evento");
-                }
-            });
-        }
-
         try {
             switch (id) {
                 /*
